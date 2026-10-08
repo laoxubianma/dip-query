@@ -138,10 +138,19 @@
   .aux-table td{padding:7px 10px;border:1px solid var(--line)}
   .aux-table tbody tr:hover td{background:#f5f8ff}
   .aux-type{font-weight:600;color:var(--brand);white-space:nowrap;vertical-align:top}
-  .aux-subs{display:flex;flex-wrap:wrap;gap:6px}
+  .aux-subs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
   .aux-sub{display:inline-flex;flex-direction:column;align-items:center;background:#fff;
-    border:1px solid var(--line);border-radius:8px;padding:4px 10px;min-width:62px;line-height:1.25}
+    border:1px solid var(--line);border-radius:8px;padding:5px 10px;min-width:0;line-height:1.25}
   .aux-sub i{font-style:normal;font-size:11px;color:var(--sub);font-family:ui-monospace,Menlo,monospace}
+  @media(max-width:420px){
+    .aux-subs{gap:6px}
+    .aux-sub{padding:5px 4px}
+    .aux-sub i{font-size:9.5px;letter-spacing:-.2px}
+    .aux-block{padding:10px 10px}
+    .aux-table th,.aux-table td{padding:7px 8px}
+    .aux-type{font-size:11.5px}
+    .wrap{padding-left:12px;padding-right:12px}
+  }
   /* 多条命中结果列表 */
   .hit-item{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;background:#fbfcfe}
   .hit-item-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
