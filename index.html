@@ -2,7 +2,11 @@
 <!-- saved from url=(0012)about:srcdoc -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#1d4ed8">
 <title>DIP 2.0 分组查询系统</title>
 <style>
   :root{
@@ -14,12 +18,28 @@
   body{margin:0;background:var(--bg);color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
     font-size:14px;line-height:1.6}
-  .wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px;
+    padding-left:max(18px, env(safe-area-inset-left));
+    padding-right:max(18px, env(safe-area-inset-right));
+    padding-bottom:calc(60px + env(safe-area-inset-bottom))}
+  /* 移动端：铺满整屏，安全区与触控优化 */
+  @media(max-width:760px){
+    .wrap{width:100%;max-width:none;padding-top:16px;
+      padding-top:calc(16px + env(safe-area-inset-top))}
+    .card{padding:16px;border-radius:12px}
+    input, select, textarea{font-size:16px}      /* ≥16px 防止 iOS 自动放大 */
+    button.primary, button.ghost{min-height:44px} /* 触控友好高度 */
+    .combo input{padding:12px}
+    .dd .it{padding:11px 12px}                    /* 候选项加大便于点按 */
+    .sim-tab{padding:9px 14px}
+    h1{font-size:19px}
+    .wrap{overflow-x:hidden}
+  }
   header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
   h1{font-size:20px;margin:0;font-weight:700;letter-spacing:.3px}
   h1 span{color:var(--brand)}
-  .badge{display:inline-block;background:var(--brand-soft);color:var(--brand);
-    border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin-left:8px;vertical-align:middle}
+  .badge{display:block;background:var(--brand-soft);color:var(--brand);width:fit-content;
+    border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin:6px 0 0;text-align:left}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px}
   .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:760px){.form-grid{grid-template-columns:1fr}}
@@ -81,6 +101,30 @@
   @media(max-width:760px){
     .res-table{display:block;overflow-x:auto;white-space:nowrap}
   }
+  /* 单条结果：纵向排列（左列 诊断/手术，右列 其他） */
+  .res-vertical{display:grid;grid-template-columns:1fr 1fr;gap:0 22px;margin-top:4px;
+    align-items:start}
+  .rv-col{min-width:0}
+  .rv-col + .rv-col{border-left:1px dashed var(--line);padding-left:22px}
+  .rv-row{display:grid;grid-template-columns:104px 1fr;gap:10px;align-items:start;
+    padding:9px 0;border-bottom:1px solid #eef1f6}
+  .rv-row:last-child{border-bottom:0;padding-bottom:0}
+  .rv-row:first-child{padding-top:0}
+  .rv-k{font-size:12.5px;color:var(--sub);font-weight:600;padding-top:2px}
+  .rv-v{font-size:13.5px;line-height:1.55;word-break:break-word;min-width:0}
+  .rv-v .c-code{color:var(--brand);font-weight:600}
+  .rv-num{font-size:18px;font-weight:700;letter-spacing:.3px}
+  .rv-num .unit{font-size:12px;color:var(--sub);font-weight:500;margin-left:4px}
+  .rv-sub{color:var(--sub);font-size:12.5px;margin-top:2px}
+  @media(max-width:760px){
+    .res-vertical{grid-template-columns:1fr;gap:0}
+    .rv-col + .rv-col{border-left:0;padding-left:0;border-top:1px dashed var(--line);
+      margin-top:12px;padding-top:12px}
+  }
+  @media(max-width:480px){
+    .rv-row{grid-template-columns:1fr;gap:3px}
+    .rv-k{padding-top:0}
+  }
   /* 辅助分型 */
   .aux-wrap{margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}
   .aux-title{font-size:14px;font-weight:700;margin:0 0 10px;color:var(--text)}
@@ -137,14 +181,14 @@
         <label class="field" for="dxInput">主要诊断</label>
         <div class="combo">
           <input id="dxInput" type="text" autocomplete="off" placeholder="诊断编码或名称">
-          <div class="dd" id="dxDD"></div>
+          <div class="dd" id="dxDD"><div class="it active" data-i="0"><span class="c">H25.900</span><span class="n">老年性白内障</span></div></div>
         </div>
         <div class="picked" id="dxPicked"></div>
       </div>
       <div>
         <label class="field" for="opInput">主要手术操作</label>
         <div class="combo">
-          <input id="opInput" type="text" autocomplete="off" placeholder="手术操作编码或名称（可留空）">
+          <input id="opInput" type="text" autocomplete="off" placeholder="手术操作编码或名称">
           <div class="dd" id="opDD"></div>
         </div>
         <div class="picked" id="opPicked"></div>
@@ -156,7 +200,35 @@
     </div>
   </div>
 
-  <div id="result"></div>
+  <div id="result" style="display: none;"><div class="card">
+      <div class="res-head">
+        <div>
+          <div class="res-title">未特指的老年性白内障</div>
+          <div style="margin-top:6px">
+            <span class="tag ok">已入组 · 核心组·保守治疗</span>
+            
+          </div>
+        </div>
+      </div>
+      <div class="res-vertical"><div class="rv-col"><div class="rv-row"><div class="rv-k">主要诊断</div><div class="rv-v"><span class="mono c-code">H25.9</span><br>未特指的老年性白内障</div></div><div class="rv-row"><div class="rv-k">主要手术操作</div><div class="rv-v"><span class="dash">——</span></div></div><div class="rv-row"><div class="rv-k">相关手术操作</div><div class="rv-v"><span class="dash">——</span></div></div></div><div class="rv-col"><div class="rv-row"><div class="rv-k">分值</div><div class="rv-v"><span class="mono rv-num">0.2426</span></div></div><div class="rv-row"><div class="rv-k">支付标准</div><div class="rv-v"><span class="mono rv-num">3,099.16<span class="unit">元</span></span></div></div><div class="rv-row"><div class="rv-k">低倍率参考值</div><div class="rv-v"><span class="mono rv-num">2,165.98<span class="unit">元</span></span></div></div></div></div>
+      <div class="aux-wrap">
+    <h3 class="aux-title">辅助分型结果</h3>
+    <div class="aux-block">
+      <div class="aux-head">
+        
+        <b>辅助分型</b>
+        <span class="tag info mono">H25.9-null</span>
+      </div>
+      <table class="aux-table">
+        <thead><tr><th>辅助目录类型</th><th>亚型（下方数字为亚型支付标准，单位：元）</th></tr></thead>
+        <tbody><tr>
+        <td class="aux-type">严重程度</td>
+        <td class="aux-subs"><span class="aux-sub">I-A<i>2,937.29</i></span><span class="aux-sub">I-B<i>5,135.32</i></span></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </div>
+    </div></div>
   <div id="similarBox"></div>
 </div>
 
@@ -243,7 +315,6 @@ function makeCombo(inputId, ddId, pickedId, data, allowEmpty, kind){
     picked = it;
     input.value = it[0] + '  ' + it[1];
     dd.classList.remove('open');
-    $(pickedId).textContent = '✔ 已选：' + it[0] + ' ' + it[1];
   }
   // 点击输入框即清空（便于下一次输入）
   input.addEventListener('mousedown', e=>{
@@ -275,7 +346,7 @@ function makeCombo(inputId, ddId, pickedId, data, allowEmpty, kind){
   }
   return {
     get(){ return picked; },
-    set(it){ picked = it; input.value = it[0] + '  ' + it[1]; $(pickedId).textContent = '✔ 已选：' + it[0] + ' ' + it[1]; },
+    set(it){ picked = it; input.value = it[0] + '  ' + it[1]; },
     clear(){ clearSelf(); },
     kind
   };
@@ -412,7 +483,7 @@ function auxHTML(r, list){
     if (!seen[k]){
       const items = lookupAux(h[0], opKey);
       if (items && items.length){
-        seen[k] = { opKey, items, hitIdx: list.length>1 ? (idx+1) : 0 };
+        seen[k] = { opKey, items, hitIdx: list.length>1 ? (idx+1) : 0, pay: num(h[8]) };
         entryKeys.push(k);
       }
     }
@@ -421,7 +492,7 @@ function auxHTML(r, list){
 
   let blocks = '';
   entryKeys.forEach(k=>{
-    const { opKey, items, hitIdx } = seen[k];
+    const { opKey, items, hitIdx, pay } = seen[k];
     // 按 辅助目录类型 分组
     const byType = {};
     items.forEach(it=>{ (byType[it[0]] = byType[it[0]] || []).push(it); });
@@ -431,7 +502,7 @@ function auxHTML(r, list){
       arr.sort((a,b)=> cmpSub(a[1], b[1]));
       rowsHtml += `<tr>
         <td class="aux-type">${esc(t)}</td>
-        <td class="aux-subs">${arr.map((a,i)=>`<span class="aux-sub">${esc(a[1]||'—')}<i>${fmtCoef(a[2])}</i></span>`).join('')}</td>
+        <td class="aux-subs">${arr.map((a,i)=>`<span class="aux-sub">${esc(a[1]||'—')}<i>${calcSubPay(pay, a[2])}</i></span>`).join('')}</td>
       </tr>`;
     });
     blocks += `<div class="aux-block">
@@ -441,7 +512,7 @@ function auxHTML(r, list){
         <span class="tag info mono">${esc(k)}</span>
       </div>
       <table class="aux-table">
-        <thead><tr><th>辅助目录类型</th><th>亚型（下方数字为分型系数）</th></tr></thead>
+        <thead><tr><th>辅助目录类型</th><th>亚型（下方数字为亚型支付标准，单位：元）</th></tr></thead>
         <tbody>${rowsHtml}</tbody>
       </table>
     </div>`;
@@ -480,8 +551,56 @@ function romanRank(s){
   return [map[m[1]], sub];
 }
 function fmtCoef(v){ return (v===null||v===undefined)?'—':Number(v).toFixed(4); }
+/* 亚型支付标准 = 支付标准 × 分型系数 */
+function calcSubPay(pay, coef){
+  const p = num(pay), c = num(coef);
+  if (p === null || c === null) return '—';
+  return fmtMoney(p * c);
+}
 
 /* ---------- 渲染 ---------- */
+/* 纵向条目 -> HTML */
+function rvRow(k, v){ return `<div class="rv-row"><div class="rv-k">${k}</div><div class="rv-v">${v}</div></div>`; }
+
+/* 单条命中：纵向排列，分两列（左：诊断/手术；右：其余指标） */
+function verticalTableHTML(r, h, dxName){
+  const left = [
+    rvRow('主要诊断', `<span class="mono c-code">${esc(h[0])}</span>${(h[1]||dxName) ? '<br>' + esc(h[1]||dxName) : ''}`),
+    rvRow('主要手术操作', h[2] ? `<span class="mono c-code">${esc(h[2])}</span>${h[3] ? '<br>' + esc(h[3]) : ''}` : '<span class="dash">——</span>'),
+    rvRow('相关手术操作', h[4] ? `<span class="mono c-code">${esc(h[4])}</span>${h[5] ? '<br>' + esc(h[5]) : ''}` : '<span class="dash">——</span>')
+  ].join('');
+  const right = [
+    rvRow('分值', `<span class="mono rv-num">${fmtScore(h[7])}</span>`),
+    rvRow('支付标准', `<span class="mono rv-num">${fmtMoney(h[8])}<span class="unit">元</span></span>`),
+    rvRow('低倍率参考值', `<span class="mono rv-num">${fmtMoney(h[9])}<span class="unit">元</span></span>`)
+  ].join('');
+  return `<div class="res-vertical"><div class="rv-col">${left}</div><div class="rv-col">${right}</div></div>`;
+}
+
+/* 多条命中：保持原有横向对比表 */
+function detailedTableHTML(r, list, dxName){
+  return `<table class="res-table">
+    <thead><tr>
+      <th>主要诊断</th>
+      <th>主要手术操作</th>
+      <th>相关手术操作</th>
+      <th style="text-align:right">分值</th>
+      <th style="text-align:right">支付标准（元）</th>
+      <th style="text-align:right">低倍率参考值（元）</th>
+    </tr></thead>
+    <tbody>
+      ${list.map(h=>`<tr>
+        <td><span class="mono c-code">${esc(h[0])}</span><br>${esc(h[1]||dxName||'')}</td>
+        <td>${h[2] ? `<span class="mono c-code">${esc(h[2])}</span><br>${esc(h[3]||'')}` : '<span class="dash">——</span>'}</td>
+        <td>${h[4] ? `<span class="mono c-code">${esc(h[4])}</span><br>${esc(h[5]||'')}` : '<span class="dash">——</span>'}</td>
+        <td style="text-align:right" class="mono strong">${fmtScore(h[7])}</td>
+        <td style="text-align:right" class="mono strong">${fmtMoney(h[8])}</td>
+        <td style="text-align:right" class="mono strong">${fmtMoney(h[9])}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
 function render(r, dxName, opName){
   const box = $('result');
   let html = '';
@@ -490,6 +609,7 @@ function render(r, dxName, opName){
     const list = (r.hits && r.hits.length) ? r.hits : [r.hit];
     const multi = list.length > 1;
     const h0 = list[0];
+    const detail = multi ? detailedTableHTML(r, list, dxName) : verticalTableHTML(r, h0, dxName);
     html += `<div class="card">
       <div class="res-head">
         <div>
@@ -500,26 +620,7 @@ function render(r, dxName, opName){
           </div>
         </div>
       </div>
-      <table class="res-table">
-        <thead><tr>
-          <th>主要诊断</th>
-          <th>主要手术操作</th>
-          <th>相关手术操作</th>
-          <th style="text-align:right">分值</th>
-          <th style="text-align:right">支付标准（元）</th>
-          <th style="text-align:right">低倍率参考值（元）</th>
-        </tr></thead>
-        <tbody>
-          ${list.map(h=>`<tr>
-            <td><span class="mono c-code">${esc(h[0])}</span><br>${esc(h[1]||dxName||'')}</td>
-            <td>${h[2] ? `<span class="mono c-code">${esc(h[2])}</span><br>${esc(h[3]||'')}` : '<span class="dash">——</span>'}</td>
-            <td>${h[4] ? `<span class="mono c-code">${esc(h[4])}</span><br>${esc(h[5]||'')}` : '<span class="dash">——</span>'}</td>
-            <td style="text-align:right" class="mono strong">${fmtScore(h[7])}</td>
-            <td style="text-align:right" class="mono strong">${fmtMoney(h[8])}</td>
-            <td style="text-align:right" class="mono strong">${fmtMoney(h[9])}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
+      ${detail}
       ${auxHTML(r, list)}
     </div>`;
   } else if (r.compHit){
@@ -533,26 +634,18 @@ function render(r, dxName, opName){
           </div>
         </div>
       </div>
-      <table class="res-table">
-        <thead><tr>
-          <th>主要诊断</th>
-          <th>主要手术操作</th>
-          <th>相关手术操作</th>
-          <th style="text-align:right">分值</th>
-          <th style="text-align:right">支付标准（元）</th>
-          <th style="text-align:right">低倍率参考值（元）</th>
-        </tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="mono c-code">${esc(c[1]||r.dxCode)}</span><br>${esc(c[2]||dxName||'')}</td>
-            <td>${r.opCode ? `<span class="mono c-code">${esc(r.opCode)}</span><br>${esc(opName||'')}` : '<span class="dash">——</span>'}</td>
-            <td><span class="dash">——</span></td>
-            <td style="text-align:right" class="mono strong">${fmtScore(c[4])}</td>
-            <td style="text-align:right" class="mono strong">${fmtMoney(c[5])}</td>
-            <td style="text-align:right" class="mono strong">${fmtMoney(c[6])}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="res-vertical">
+        <div class="rv-col">
+          ${rvRow('主要诊断', `<span class="mono c-code">${esc(c[1]||r.dxCode)}</span>${(c[2]||dxName) ? '<br>' + esc(c[2]||dxName) : ''}`)}
+          ${rvRow('主要手术操作', r.opCode ? `<span class="mono c-code">${esc(r.opCode)}</span>${opName ? '<br>' + esc(opName) : ''}` : '<span class="dash">——</span>')}
+          ${rvRow('相关手术操作', '<span class="dash">——</span>')}
+        </div>
+        <div class="rv-col">
+          ${rvRow('分值', `<span class="mono rv-num">${fmtScore(c[4])}</span>`)}
+          ${rvRow('支付标准', `<span class="mono rv-num">${fmtMoney(c[5])}<span class="unit">元</span></span>`)}
+          ${rvRow('低倍率参考值', `<span class="mono rv-num">${fmtMoney(c[6])}<span class="unit">元</span></span>`)}
+        </div>
+      </div>
     </div>`;
   } else {
     html += `<div class="card">
