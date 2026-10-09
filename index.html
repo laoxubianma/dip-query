@@ -41,15 +41,16 @@
   .badge{display:block;background:var(--brand-soft);color:var(--brand);width:fit-content;
     border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin:6px 0 0;text-align:left}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 16px;row-gap:8px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
   @media(max-width:760px){.form-grid{grid-template-columns:1fr}}
-  label.field{display:block;font-weight:600;margin-bottom:3px;line-height:1.35}
+  label.field{display:block;font-weight:600;margin-bottom:8px;line-height:1.4}
   label.field small{font-weight:400;color:var(--sub);margin-left:6px}
   .combo{position:relative}
   .combo input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
     font-size:14px;outline:none;background:#fff;transition:border-color .15s,box-shadow .15s}
   .combo input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(29,78,216,.12)}
-  .picked{font-size:12px;color:var(--ok);margin-top:5px;min-height:16px;font-weight:600}
+  .picked{font-size:12px;color:var(--ok);font-weight:600}
+  .picked:not(:empty){margin-top:6px}
   .dd{position:absolute;z-index:50;left:0;right:0;top:calc(100% + 4px);background:#fff;
     border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(16,24,40,.14);
     max-height:320px;overflow:auto;display:none}
@@ -61,7 +62,7 @@
   .dd .it .n{color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .dd .empty{padding:12px;color:var(--sub);text-align:center}
   .dd .moreitem{padding:7px 12px;background:#fafbfd;color:var(--sub);font-size:12px;text-align:center}
-  .actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+  .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
   button.primary{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:11px 26px;
     font-size:15px;font-weight:600;cursor:pointer;transition:background .15s}
   button.primary:hover{background:#1a43bd}
@@ -184,7 +185,7 @@
         <label class="field" for="dxInput">主要诊断</label>
         <div class="combo">
           <input id="dxInput" type="text" autocomplete="off" placeholder="诊断编码或名称">
-          <div class="dd" id="dxDD"><div class="it active" data-i="0"><span class="c">K29.500</span><span class="n">慢性胃炎</span></div></div>
+          <div class="dd" id="dxDD"><div class="it " data-i="0"><span class="c">K29.500</span><span class="n">慢性胃炎</span></div></div>
         </div>
         <div class="picked" id="dxPicked"></div>
       </div>
@@ -192,7 +193,7 @@
         <label class="field" for="opInput">主要手术操作</label>
         <div class="combo">
           <input id="opInput" type="text" autocomplete="off" placeholder="手术操作编码或名称">
-          <div class="dd" id="opDD"><div class="it " data-i="0"><span class="c">00.0100</span><span class="n">头和颈部血管治疗性超声</span></div><div class="it " data-i="1"><span class="c">00.0101</span><span class="n">头部血管治疗性超声</span></div><div class="it " data-i="2"><span class="c">00.0102</span><span class="n">颈部血管治疗性超声</span></div><div class="it " data-i="3"><span class="c">00.0200</span><span class="n">心脏治疗性超声</span></div><div class="it " data-i="4"><span class="c">00.0200x001</span><span class="n">心脏血管治疗性超声</span></div><div class="it " data-i="5"><span class="c">00.0300</span><span class="n">周围血管治疗性超声</span></div><div class="it " data-i="6"><span class="c">00.0900</span><span class="n">其他治疗性超声</span></div><div class="it " data-i="7"><span class="c">00.0900x001</span><span class="n">治疗性超声</span></div><div class="it " data-i="8"><span class="c">00.0901</span><span class="n">高强度聚焦超声治疗</span></div><div class="it " data-i="9"><span class="c">00.1000</span><span class="n">化学治疗物质植入</span></div><div class="it " data-i="10"><span class="c">00.1100</span><span class="n">重组人类活化C蛋白输注</span></div><div class="it " data-i="11"><span class="c">00.1101</span><span class="n">重组蛋白输注</span></div><div class="it " data-i="12"><span class="c">00.1200</span><span class="n">吸入一氧化氮管理</span></div><div class="it " data-i="13"><span class="c">00.1201</span><span class="n">一氧化氮疗法</span></div><div class="it " data-i="14"><span class="c">00.1300</span><span class="n">奈西立肽注射或输注</span></div><div class="it " data-i="15"><span class="c">00.1301</span><span class="n">人类B型钠尿肽（hBNP）输注</span></div><div class="it " data-i="16"><span class="c">00.1400</span><span class="n">噁唑烷酮类抗生素注射或输注</span></div><div class="it " data-i="17"><span class="c">00.1400x001</span><span class="n">注射噁唑烷酮类抗生素</span></div><div class="it " data-i="18"><span class="c">00.1400x002</span><span class="n">输注噁唑烷酮类抗生素</span></div><div class="it " data-i="19"><span class="c">00.1500</span><span class="n">大剂量白细胞介素-2[IL-2]输注</span></div><div class="it " data-i="20"><span class="c">00.1500x001</span><span class="n">输注白细胞介素</span></div><div class="it " data-i="21"><span class="c">00.1500x002</span><span class="n">注射阿地白细胞介素</span></div><div class="it " data-i="22"><span class="c">00.1600</span><span class="n">药物的静脉旁路移植[引导]加压疗法</span></div><div class="it " data-i="23"><span class="c">00.1601</span><span class="n">经活体外血管治疗</span></div><div class="it " data-i="24"><span class="c">00.1602</span><span class="n">高压移植[引导]</span></div><div class="it " data-i="25"><span class="c">00.1700</span><span class="n">血管加压剂灌注</span></div><div class="it " data-i="26"><span class="c">00.1800</span><span class="n">输注免疫抑制抗体疗法</span></div><div class="it " data-i="27"><span class="c">00.1801</span><span class="n">单克隆抗体治疗</span></div><div class="it " data-i="28"><span class="c">00.1802</span><span class="n">多克隆抗体治疗</span></div><div class="it " data-i="29"><span class="c">00.1900</span><span class="n">经输注的血脑屏障破坏术[BBBD]</span></div><div class="it " data-i="30"><span class="c">00.2100</span><span class="n">颅外脑血管的血管内显像</span></div><div class="it " data-i="31"><span class="c">00.2101</span><span class="n">颈动脉血管内超声(IVUS)</span></div><div class="it " data-i="32"><span class="c">00.2102</span><span class="n">颅外脑血管血管内超声(IVUS)</span></div><div class="it " data-i="33"><span class="c">00.2200</span><span class="n">胸内血管的血管内显像</span></div><div class="it " data-i="34"><span class="c">00.2201</span><span class="n">胸内血管血管内超声(IVUS)</span></div><div class="it " data-i="35"><span class="c">00.2202</span><span class="n">胸主动脉血管内超声(IVUS)</span></div><div class="it " data-i="36"><span class="c">00.2300</span><span class="n">周围血管的血管内显像</span></div><div class="it " data-i="37"><span class="c">00.2300x002</span><span class="n">周围血管血管内超声(IVUS)</span></div><div class="it " data-i="38"><span class="c">00.2300x003</span><span class="n">上肢血管血管内超声(IVUS)</span></div><div class="it " data-i="39"><span class="c">00.2300x004</span><span class="n">下肢血管血管内超声(IVUS)</span></div><div class="it " data-i="40"><span class="c">00.2400</span><span class="n">冠状血管的血管内显像</span></div><div class="it " data-i="41"><span class="c">00.2400x001</span><span class="n">冠状动脉血管内超声(IVUS)</span></div><div class="it " data-i="42"><span class="c">00.2500</span><span class="n">肾血管的血管内显像</span></div><div class="it " data-i="43"><span class="c">00.2500x002</span><span class="n">肾血管血管内超声(IVUS)</span></div><div class="it " data-i="44"><span class="c">00.2800</span><span class="n">血管内显像，其他特指的血管</span></div><div class="it " data-i="45"><span class="c">00.2900</span><span class="n">血管内显像</span></div><div class="it " data-i="46"><span class="c">00.2900x001</span><span class="n">血管内超声</span></div><div class="it " data-i="47"><span class="c">00.3100</span><span class="n">CT/CTA的计算机辅助外科手术</span></div><div class="it " data-i="48"><span class="c">00.3101</span><span class="n">CT导航计算机辅助外科手术</span></div><div class="it " data-i="49"><span class="c">00.3200</span><span class="n">MR/MRA的计算机辅助外科手术</span></div><div class="it " data-i="50"><span class="c">00.3200x001</span><span class="n">MRA神经导航辅助外科</span></div><div class="it " data-i="51"><span class="c">00.3201</span><span class="n">MR神经导航计算机辅助外科手术</span></div><div class="it " data-i="52"><span class="c">00.3300</span><span class="n">荧光透视的计算机辅助外科手术</span></div><div class="it " data-i="53"><span class="c">00.3400</span><span class="n">非显像导航计算机辅助外科手术</span></div><div class="it " data-i="54"><span class="c">00.3400x002</span><span class="n">磁导航计算机辅助外科</span></div><div class="it " data-i="55"><span class="c">00.3500</span><span class="n">多数据的计算机辅助外科手术</span></div><div class="it " data-i="56"><span class="c">00.3500x001</span><span class="n">显像导航计算机辅助外科</span></div><div class="it " data-i="57"><span class="c">00.3900</span><span class="n">其他计算机辅助外科手术</span></div><div class="it " data-i="58"><span class="c">00.3900x001</span><span class="n">计算机辅助外科</span></div><div class="it " data-i="59"><span class="c">00.4000</span><span class="n">单根血管操作</span></div></div>
+          <div class="dd" id="opDD"><div class="it " data-i="0"><span class="c">44.1100</span><span class="n">经腹胃镜检查</span></div><div class="it " data-i="1"><span class="c">44.1100x002</span><span class="n">术中胃镜检查</span></div><div class="it " data-i="2"><span class="c">44.1101</span><span class="n">经腹胃镜检查(手术中)</span></div><div class="it " data-i="3"><span class="c">44.1200</span><span class="n">经人工造口胃镜检查</span></div><div class="it " data-i="4"><span class="c">44.1300</span><span class="n">其他胃镜检查</span></div><div class="it " data-i="5"><span class="c">44.1300x001</span><span class="n">胃镜检查</span></div></div>
         </div>
         <div class="picked" id="opPicked"></div>
       </div>
@@ -208,21 +209,47 @@
         <div>
           <div class="res-title">未特指的慢性胃炎</div>
           <div style="margin-top:6px">
-            <span class="tag ok">已入组 · 核心组·保守治疗</span>
-            
+            <span class="tag ok">已入组 · 核心组·精确匹配</span>
+            <span class="tag badge-n" style="margin-left:6px">共 2 条结果</span>
           </div>
         </div>
       </div>
-      <div class="res-vertical"><div class="rv-row"><div class="rv-k">主要诊断</div><div class="rv-v"><span class="mono c-code">K29.5</span><br>未特指的慢性胃炎</div></div><div class="rv-row"><div class="rv-k">主要手术操作</div><div class="rv-v"><span class="dash">——</span></div></div><div class="rv-row"><div class="rv-k">相关手术操作</div><div class="rv-v"><span class="dash">——</span></div></div><div class="rv-row"><div class="rv-k">分值</div><div class="rv-v"><span class="mono rv-num">0.5167</span></div></div><div class="rv-row"><div class="rv-k">支付标准</div><div class="rv-v"><span class="mono rv-num">6,600.79<span class="unit">元</span></span></div></div><div class="rv-row"><div class="rv-k">低倍率参考值</div><div class="rv-v"><span class="mono rv-num">4,613.25<span class="unit">元</span></span></div></div></div>
+      <table class="res-table">
+    <thead><tr>
+      <th>主要诊断</th>
+      <th>主要手术操作</th>
+      <th>相关手术操作</th>
+      <th style="text-align:right">分值</th>
+      <th style="text-align:right">支付标准（元）</th>
+      <th style="text-align:right">低倍率参考值（元）</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="mono c-code">K29.5</span><br>未特指的慢性胃炎</td>
+        <td><span class="mono c-code">44.1300x001</span><br>胃镜检查</td>
+        <td><span class="dash">——</span></td>
+        <td style="text-align:right" class="mono strong">0.3906</td>
+        <td style="text-align:right" class="mono strong">4,990.12</td>
+        <td style="text-align:right" class="mono strong">3,487.56</td>
+      </tr><tr>
+        <td><span class="mono c-code">K29.5</span><br>未特指的慢性胃炎</td>
+        <td><span class="mono c-code">44.1300x001</span><br>胃镜检查</td>
+        <td><span class="mono c-code">45.2501</span><br>结肠镜下大肠活组织检查</td>
+        <td style="text-align:right" class="mono strong">0.5449</td>
+        <td style="text-align:right" class="mono strong">6,961.20</td>
+        <td style="text-align:right" class="mono strong">4,865.14</td>
+      </tr>
+    </tbody>
+  </table>
       <div class="aux-wrap">
     <h3 class="aux-title">该分组根据住院天数和/或其他诊断分为以下亚型</h3>
     <div class="aux-block">
       <div class="aux-head">
-        
+        <span class="aux-idx">#1</span>
         <b>辅助分型</b>
-        <span class="tag info mono">K29.5-null</span>
+        <span class="tag info mono">K29.5-44.1300x001</span>
       </div>
-      <div class="aux-grid"><span class="aux-sub">I-A<i>4,031.86</i></span><span class="aux-sub">I-B<i>7,020.55</i></span><span class="aux-sub">II<i>8,544.96</i></span><span class="aux-sub">III<i>8,544.96</i></span><span class="aux-sub">IV-A<i>4,031.86</i></span></div>
+      <div class="aux-grid"><span class="aux-sub">I-A<i>3,838.64</i></span><span class="aux-sub">I-B<i>6,392.02</i></span><span class="aux-sub">II<i>6,392.02</i></span><span class="aux-sub">III<i>6,392.02</i></span></div>
     </div>
   </div>
     </div></div>
@@ -472,15 +499,19 @@ function query(dxCode, opCodeRaw){
 }
 
 /* 辅助分型查询：键 = "诊断码5位-主操作码"（保守治疗为 "诊断码5位-null"）
- * 支持兜底：主键未命中时回退到保守治疗键（"诊断码5位-null"） */
-function lookupAux(dx5, opCode){
+ * 兜底规则：仅当该操作【确实按保守治疗处理】时，才回退到 "诊断码5位-null"。
+ * 若操作已作为分组依据精确命中核心组（如 J96.9 + 33.2200x003 纤维支气管镜检查），
+ * 说明它有独立的分组口径，此时不得回退到保守治疗辅助分型——没有专属辅助分型就应留空。 */
+function lookupAux(dx5, opCode, isConsv){
   const key = `${dx5}-${opCode ? opCode : 'null'}`;
   const direct = D.aux[key];
   if (direct && direct.length) return { items: direct, key, fallback: false };
-  // 兜底1：具体主操作无专属辅助分型 -> 回退该诊断的保守治疗辅助分型
-  const fbKey = `${dx5}-null`;
-  if (opCode && D.aux[fbKey] && D.aux[fbKey].length){
-    return { items: D.aux[fbKey], key: fbKey, fallback: true };
+  // 兜底：仅保守治疗口径才回退到 "诊断码5位-null"
+  if (isConsv){
+    const fbKey = `${dx5}-null`;
+    if (D.aux[fbKey] && D.aux[fbKey].length){
+      return { items: D.aux[fbKey], key: fbKey, fallback: true };
+    }
   }
   return null;
 }
@@ -490,14 +521,14 @@ function auxHTML(r, list){
   const seen = {};
   const entryKeys = [];
   list.forEach((h, idx)=>{
-    /* 计算辅助分型的「主操作键」：
-     *  - 若该核心组条目本身带回退操作（h[4] 相关手术），辅助分型按条目自身的主操作 h[2] 查
-     *  - 若条目无主操作（保守治疗组），则使用用户实际输入的主操作（若其被判定为「不作为
-     *    分组依据」而按保守治疗处理，仍应能取到辅助分型） */
+    /* 该核心组条目是否属于「保守治疗」口径：
+     *  - 条目自身无主操作（保守治疗组）→ 是
+     *  - 条目有主操作（精确/相关命中核心组）→ 否，此时辅助分型只按该主操作精确查，不回退 */
+    const isConsvEntry = !h[2];
     const opKey = h[2] ? h[2] : (r.opCode ? r.opCode : null);
     const k = `${h[0]}-${opKey ? opKey : 'null'}`;
     if (!seen[k]){
-      const res = lookupAux(h[0], opKey);
+      const res = lookupAux(h[0], opKey, isConsvEntry);
       if (res && res.items && res.items.length){
         seen[k] = { items: res.items, displayKey: res.key,
                     hitIdx: list.length>1 ? (idx+1) : 0, pay: num(h[8]) };
@@ -700,13 +731,12 @@ function collectSimilar(r){
 
 function simRowHTML(rec, mark){
   const op = rec[2] ? `<span class="mono">${esc(rec[2])}</span> ${esc(rec[3]||'')}` : '——';
+  const relOp = rec[4] ? `<span class="mono">${esc(rec[4])}</span> ${esc(rec[5]||'')}` : '——';
   return `<tr class="${mark?'is-hit':''}">
     <td><span class="mono" style="color:var(--brand);font-weight:600">${esc(rec[0])}</span><br>${esc(rec[1]||'')}</td>
     <td>${op}</td>
-    <td>${esc(rec[6]||'—')}</td>
-    <td style="text-align:right" class="mono">${fmtScore(rec[7])}</td>
+    <td>${relOp}</td>
     <td style="text-align:right" class="mono">${fmtMoney(rec[8])}</td>
-    <td style="text-align:right" class="mono">${fmtMoney(rec[9])}</td>
   </tr>`;
 }
 
@@ -716,8 +746,8 @@ function simTableHTML(list, hitSet, keyPrefix, emptyText){
   const rows = list.slice(0, LIMIT).map(i=>simRowHTML(D.core[i], hitSet.has(keyPrefix+i))).join('');
   let more = list.length > LIMIT ? `<div class="sim-more">共 ${list.length} 条，已显示前 ${LIMIT} 条</div>` : '';
   return `<div class="sim-tablewrap"><table class="sim">
-    <thead><tr><th>主要诊断编码 / 名称</th><th>主要手术操作（代码 / 名称）</th><th>操作类型</th>
-      <th style="text-align:right">分值</th><th style="text-align:right">支付标准 ↓</th><th style="text-align:right">低倍率参考值</th></tr></thead>
+    <thead><tr><th>主要诊断</th><th>主要手术操作</th><th>相关手术操作</th>
+      <th style="text-align:right">支付标准 ↓</th></tr></thead>
     <tbody>${rows}</tbody></table>${more}</div>`;
 }
 
